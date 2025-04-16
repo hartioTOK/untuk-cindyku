@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Cinta untuk Cindy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Chewy', cursive;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+            background: linear-gradient(-45deg, #a8c0ff, #cce0ff, #e0f7ff, #a8c0ff);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #1e40af;
+            margin-top: 50px;
+            font-family: 'Bubblegum Sans', cursive;
+        }
+
+        .heart {
+            font-size: 4em;
+            color: #ff66b2;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .reveal-button {
+            display: block;
+            font-size: 1.1em;
+            padding: 12px 24px;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 20px auto;
+            font-family: 'Bubblegum Sans', cursive;
+        }
+
+        .reveal-button:hover {
+            background-color: #3749a2;
+        }
+
+        .message-box {
+            font-size: 1.3em;
+            color: #444;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            max-width: 600px;
+            min-height: 100px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            font-family: 'Bubblegum Sans', cursive;
+        }
+
+        .message-box.show {
+            opacity: 1;
+            transform: scale(1.05);
+            animation: popUp 0.4s ease;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <h1>untuk sayangku💙</h1>
+    <div class="heart">❤️</div>
+    <p>Klik tombol di bawah ini yaa, cin!</p>
+
+    <button class="reveal-button" id="revealButton">Baca Surat Wasiat</button>
+
+    <audio id="loveMusic" autoplay loop>
+        <source src="lany-ilysb.mp3" type="audio/mp3">
+        Browser kamu tidak mendukung audio.
+    </audio>
+
+    <div class="message-box" id="messageBox"></div>
+
+    <script>
+        const messages = [
+            "Cindy ulang tahun? Dunia harus tau! Tapi... jangan terlalu heboh ya, nanti banyak yang ngelirik kamu, aku cemburu 🤏💙",
+            "Sayang!!! bwahahaha tua!! TUA!!",
+            "Tapi tenang cantiknya ga pernah tua😎",
+            "Jadi, di hari ulang tahunmu ini, aku cuma mau bilang: BWAHAHAHA TUA!!!🤣",
+            "Hehehe becandaa sayangg✌️",
+            "Nah ini serius nih",
+            "Semoga kamu makin keren, makin cantik (eh udah maksimal sih), dan makin sabar ngadepin aku yang oto ini 😎💙",
+            "Semoga kamu terus nemuin cinta, kedamaian, dan kebahagiaan ga cuma dari orang lain, tapi juga dari dalam diri kamu sendiri. Kamu pantas banget dapetin yang terbaik, dan aku bakal terus ada buat nemenin kamu dapetin semua hal baik yang kamu pantas dapetin",
+            "Selamat bertambah usia, cindyku!🎉, Harus bahagia terus yaa cindyy💙",
+            "lop u cindykuu🤍🤍"
+        ];
+
+        const buttonTexts = [
+            "Klik lagi sayangg",
+            "Lanjut klik lagi yaa",
+            "Sekali klik lagi sayangg",
+            "Nah udah terakhir nih",
+            "Eh maap sayang hehe, klik lagi ya😁",
+            "Klik lagi yaa cantikk",
+            "Sekali lagi boleh kan?",
+            "Eh sekali lagi sayangg",
+            "Nah beneran teraknir nih✌️",
+            "Udah selesai... tapi sayang aku ga pernah selesai 🤍"
+        ];
+
+        let current = 0;
+        const messageBox = document.getElementById('messageBox');
+        const button = document.getElementById('revealButton');
+
+        button.addEventListener('click', () => {
+            if (current < messages.length) {
+                messageBox.classList.remove('show');
+                setTimeout(() => {
+                    messageBox.innerText = messages[current];
+                    messageBox.classList.add('show');
+                    button.innerText = buttonTexts[current] || "Lanjut~";
+                    showConfettiMeriah();
+                    current++;
+                }, 200);
+            }
+        });
+
+        function showConfettiMeriah() {
+            confetti({
+                particleCount: 200,
+                spread: 160,
+                origin: { y: 0.6 },
+                colors: ['#60a5fa', '#93c5fd', '#a5f3fc', '#facc15', '#f472b6'],
+                scalar: 1.2,
+            });
+        }
+    </script>
+</body>
+</html>
